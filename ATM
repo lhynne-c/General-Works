@@ -1,0 +1,74 @@
+import time
+from termcolor import colored
+trypin = 3
+availbal = 100000
+newavailbal = ""
+print("Welcome to MyBank!")
+
+
+
+def pin():
+    msg = input("Enter your pin: ")
+
+    # Password attempt is 3 times, starts at 2, then 1 and ends when counter is 0
+    num = 2
+
+    # bananas is the correct password
+    while msg != "1234":
+        if num == 0:
+            print("Too many wrong attempts. You are locked out!")  # exhausted all 3 attempts, should print given message.
+            return
+        else:
+            print(f"Wrong Password! You have {num} chances left")  # password incorrect, display attempts left
+            msg = input("What's the secret password: ")
+            num = num - 1
+    main()
+
+
+
+
+def main():
+    global availbal
+    newavailbal = ""
+    a = input("Choose your transaction: "
+              "\n [1] Balance Inquiry"
+              "\n [2] Deposit "
+              "\n [3] Withdrawal "
+              "\n [4] Exit\n")
+    if a == "1":
+
+        print ("You're available balance is: " + str(availbal))
+        print('\n')
+        main()
+        time.delay(1)
+    if a == "2":
+        deposit = int(input("How much do you want to deposit? : "))
+        if deposit % 10 != 0:
+            print("We only accept deposits in denomination of $10")
+            main()
+        else:
+            newavailbal = availbal + deposit
+            availbal = newavailbal
+            print("You're new available balance is: " + str(newavailbal))
+            print('\n')
+            main()
+            time.delay(1)
+    if a == "3":
+        withdraw = int(input("How much do you want to withdraw?: "))
+        if withdraw % 10 != 0:
+            print("We can only dispense in denomination of $10")
+            main()
+        else:
+            newavailbal = availbal - withdraw
+            availbal = newavailbal
+            print("You're new available balance is: " + str(newavailbal))
+            print('\n')
+            main()
+            time.delay(1)
+    if a == "4":
+        print("Thank you for using my ATM. Good bye!")
+
+
+
+pin()
+
