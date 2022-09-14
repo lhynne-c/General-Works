@@ -1,0 +1,256 @@
+import tkinter
+from tkinter import messagebox
+import sqlite3
+from tkinter import *
+
+
+
+import time
+import sqlite3
+from sqlite3 import Error
+import time
+conn = sqlite3.connect('PNHS_Employees.db')
+
+c=conn.cursor()
+
+
+a = ""
+student_ID = ""
+grade = ""
+
+
+def userinput():
+    print("\n [1] - Enter Grades"
+          "\n [2] - Add Students"
+          "\n [3] - Remove Students"
+          "\n [4] - Student Average Grades"
+          "\n [5] - Exit")
+    a = input("\nWhat would like like to do today? Enter the number: ")
+
+    if a == "1":
+        student_ID = int(input("Enter student ID: "))
+        grade = float(input("Enter the grade: "))
+        c.execute("INSERT INTO employees (first) VALUES ('001');")
+        print("Adding grade to database...")
+        time.sleep(1)
+        userinput()
+
+    # add grades to system
+    elif a == "2":  # To add students
+        student_ID = int(input("Enter student ID2:"))
+        student_first_name = str(input("Enter student's first name: "))
+        student_last_name = str(input("Enter student's last name: "))
+        student_GradeNum = str(input("Which grade is the student in? : "))
+        student_Section = str(input("Enter student's section: "))
+        print("Adding the student information to database...")
+        time.sleep(1)
+        print("Successful!")
+        time.sleep(1)
+        userinput()
+
+    elif a == "3":  # To delete students
+        student_ID = int(input("Enter student ID3:"))
+        # prompt are you sure you want to permanently delete student name:
+        messagebox('Warning', 'Are you sure you want')
+        print("Removing the student from database...")
+        time.sleep(1)
+        userinput()
+
+    elif a == "4":  # Student Average Grades
+        student_ID = int(input("Enter student ID4:"))
+        # get the average of the grades of the student based on given studentID
+        # average = sum()
+
+        print("The average grade of student ")  # + student_fname + student_lname + " is " + average)
+        userinput()
+    elif a == "5":  # Exit
+        print("Thank for using the grading system. Good bye!")
+    return None
+
+
+def main_application():
+    teacher1 = {"teachername": "Chrisvert Concepcion", "teacherID": 1001, "teacherpw": 1234}
+    teacher2 = {"teachername": "Lhynne Concepcion", "teacherID": 1002, "teacherpw": 1234}
+    teacher3 = {"teachername": "Anya dela Cruz", "teacherID": 1003, "teacherpw": 1234}
+    # teacher_ID_database = teacher1,teacher2,teacher3
+    teacher1 = list(teacher1.values())
+    teacher2 = list(teacher2.values())
+    teacher3 = list(teacher3.values())
+    counter = 3
+
+    print("Welcome to Grading Central")
+
+    while counter > 0:
+        teacher_ID = int(input("Enter your ID: "))
+        if teacher_ID in teacher1 or teacher_ID in teacher2 or teacher_ID in teacher3:
+            print("Login Successful")
+            userinput()
+        else:
+            counter -= 1
+    else:
+        print("Max attempt. Contact your administrator")
+
+main_application()
+
+def ref_user():
+    global file
+    global username_info
+    global password_info
+
+    username_info = username_reg.get()
+    password_info = password_reg.get()
+
+    file = open("scatrch.txt", "w")
+    file.write(username_info)
+    file.write(",")
+    file.write(password_info)
+    file.close()
+
+    label(RegWindow, text = "REGISTER SUCCESSFULLY", fg = "green", font=("Georgina",12)).pack()
+
+    username_reg = StringVar()
+    password_reg = StringVar()
+
+    label(RegWindow, text = "REGISTRATION FORM", width = "300", height = "1", font=("Arial",15)) .pack()
+    label(RegWindow, text= "").pack()
+    label(RegWindow, text = "Enter username *", font=("Georgina",10)).pack()
+    user_register = Entry(RegWindow, textvariable = username_reg, border = "10", borderwidth = "2")
+    user_register.pack()
+    Label(RegWindow, text="Enter password *", font=("Georgina", 10)).pack()
+    password_register = Entry(RegWindow, textvariable = username_reg, border = "10", borderwidth = "2")
+    password_register.pack()
+
+    ConfirmButton = Button(RegWindow, text = "Confirm", border = "15", borderwidth = "2", command = reg_user)
+    ConfirmButton.pack()
+
+
+
+
+def login():
+    db=sqlite3.connect('login.sqlite')
+    db.execute('CREATE TABLE IF NOT EXISTS employees (Emp_ID VARCHAR, username VARCHAR, password VARCHAR);')
+    db.execute("INSERT INTO employees VALUES('1001','admin', 'admin');")
+    db.execute("INSERT INTO employees VALUES('1002','user', 'user');")
+    cursor=db.cursor()
+    cursor.execute("SELECT * FROM employees WHERE username=? AND password=?",(userinput.get(), pass_input.get()))
+    row=cursor.fetchone()
+    if row:
+        messagebox.showinfo('info', 'login success')
+        main_application()
+    else:
+        messagebox.showinfo('info', 'login failed')
+
+    db.close()
+# CTRL + / to 'comment' multiple lines
+# cursor.connection.commit()
+#Define a function to clear the Entry Widget Content
+#not working
+# def clear_text(self):
+#    self.entry.delete(0, END)
+
+def ExitApplication():
+    root = tkinter.Tk()
+
+    MsgBox = tkinter.messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application',
+                                       icon='warning')
+    if MsgBox == 'yes':
+        root.destroy()
+    else:
+        tkinter.messagebox.showinfo('Return', 'You will now return to the application screen')
+
+
+def user_register():
+
+    #need to close login window
+    register_window = tkinter.Tk()
+    register_window.title('Registration Page')
+    register_window.geometry('400x300')
+
+    register_input_empID = tkinter.StringVar()
+    register_input = tkinter.StringVar()
+    register_input = tkinter.StringVar()
+    padd = 20
+    register_window['padx'] = padd
+
+    register_label = tkinter.Label(register_window, text='Enter your credentials')
+    register_label.grid(row=0, column=0, pady=20)
+
+    register_info_empID = tkinter.Label(register_window, text='Employee ID')
+    register_info_empID.grid(row=1, column=0)
+    register_input_empID = tkinter.Entry(register_window, textvariable=register_info_empID)
+    register_input_empID.grid(row=1, column=1)
+
+    registeruserinfo = tkinter.Label(register_window, text='Username')
+    registeruserinfo.grid(row=2, column=0)
+    registeruserinput = tkinter.Entry(register_window, textvariable=registeruserinfo)
+    registeruserinput.grid(row=2, column=1, pady=20)
+
+    register_pass_info = tkinter.Label(register_window, text='Password')
+    register_pass_info.grid(row=3, column=0)
+    registerpassinput = tkinter.Entry(register_window, textvariable=register_pass_info, show='*')
+    registerpassinput.grid(row=3, column=1)
+
+    submit_btn = tkinter.Button(register_window, text='Submit', command=user_register)
+    submit_btn.grid(row=4, column=1, pady=20, ipadx=10)
+
+    register_clear_btn = tkinter.Button(register_window, text='Clear', command= user_register)
+    register_clear_btn.grid(row=5, column=1, pady=10, padx=0,ipadx=10)
+    clear_text()
+    # empID = input("Enter your Employee ID: ")
+    # newusername = str(input("Enter your desired username: "))
+    # newpassword = str(input("Enter your desired password: "))
+    # #find employeeID
+    # if empID in db:
+
+    db = sqlite3.connect('login.sqlite')
+    db.execute('CREATE TABLE IF NOT EXISTS employees (Emp_ID VARCHAR, username VARCHAR, password VARCHAR);')
+    db.execute("INSERT INTO employees VALUES('{}','{}','{}')".format(register_input_empID, registeruserinput , registerpassinput ))
+    db.commit()
+    # # db.execute("INSERT INTO employees (username, password) VALUES('user', 'user');")
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM employees WHERE Emp_ID=?", (register_input_empID))
+    row = cursor.fetchone()
+    if row:
+        messagebox.showinfo('info', 'account creation success')
+        main_application()
+    else:
+        messagebox.showinfo('info', 'account creation failed')
+
+    login()
+
+
+    main_window=tkinter.Tk()
+    main_window.title('Login App')
+    main_window.geometry('400x300')
+
+    user_input=tkinter.StringVar()
+    pass_input=tkinter.StringVar()
+    padd=20
+    main_window['padx']=padd
+
+    info_label = tkinter.Label(main_window, text='Login Application')
+    info_label.grid(row=0, column=0, pady=20)
+    info_user = tkinter.Label(main_window, text='Username')
+    info_user.grid(row=1, column=0)
+    userinput = tkinter.Entry(main_window, textvariable=user_input)
+    userinput.grid(row=1, column=1)
+    info_pass = tkinter.Label(main_window, text='Password')
+    info_pass.grid(row=2, column=0, pady=20)
+
+    passinput = tkinter.Entry(main_window, textvariable=pass_input, show='*')
+    passinput.grid(row=2, column=1)
+
+    login_btn = tkinter.Button(main_window, text='Login', command=login)
+    login_btn.grid(row=3, column=1)
+
+    forgotpassword_btn = tkinter.Button(main_window, text='Forgot Password', command=login)
+    forgotpassword_btn.grid(row=4, column=0, pady = 20)
+
+    register_btn = tkinter.Button(main_window, text='Register', command=user_register)
+    register_btn.grid(row=4, column=1)
+
+
+
+
+
+
