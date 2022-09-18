@@ -39,8 +39,9 @@ def main():
 
         print ("You're available balance is: " + str(availbal))
         print('\n')
-        main()
         time.delay(1)
+        main()
+
     if a == "2":
         deposit = int(input("How much do you want to deposit? : "))
         if deposit % 10 != 0:
@@ -51,8 +52,9 @@ def main():
             availbal = newavailbal
             print("You're new available balance is: " + str(newavailbal))
             print('\n')
-            main()
             time.delay(1)
+            main()
+
     if a == "3":
         withdraw = int(input("How much do you want to withdraw?: "))
         if withdraw % 10 != 0:
@@ -63,8 +65,9 @@ def main():
             availbal = newavailbal
             print("You're new available balance is: " + str(newavailbal))
             print('\n')
-            main()
             time.delay(1)
+            main()
+
     if a == "4":
         print("Thank you for using my ATM. Good bye!")
 
