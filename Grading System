@@ -2,50 +2,56 @@ import tkinter
 from tkinter import messagebox
 import sqlite3
 from tkinter import *
-
-
-
+import mysql.connector
 import time
-import sqlite3
-from sqlite3 import Error
-import time
-conn = sqlite3.connect('PNHS_Employees.db')
+from datetime import datetime
+from mysql.connector import Error
 
-c=conn.cursor()
-
-
-a = ""
-student_ID = ""
-grade = ""
-
+db = mysql.connector.connect(
+    host= 'localhost',
+    database = 'schoolsystem',
+    user = 'root',
+    password = 'Welcome1!')
+mycursor = db.cursor()
+#mycursor.execute("CREATE DATABASE schoolsystem")
+#mycursor.execute("CREATE TABLE gradingsystem (studentID int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, firstname VARCHAR(25) NOT NULL, middlename VARCHAR(25), lastname VARCHAR(25), address VARCHAR(50), city VARCHAR(25), postal VARCHAR(7), phonenumber int(11), username VARCHAR(10) NOT NULL, password VARCHAR(25), gradenumber int(1) NOT NULL, section VARCHAR(10)) ")
+#mycursor.execute("INSERT INTO tblstudents (FirstName, LastName, PhoneNumber, Scholarship, DateEnrolled) VALUES (%s,%s,%s,%s,%s)", ("Chrisvert", "Concepcion", "09760040433",1, datetime.now()))
+# mycursor.execute("SELECT * FROM gradingsystem;")
+# db.commit
+# for x in mycursor:
+#     print(x)
 
 def userinput():
-    print("\n [1] - Enter Grades"
-          "\n [2] - Add Students"
-          "\n [3] - Remove Students"
-          "\n [4] - Student Average Grades"
+    print("\n [1] - View Grades"
+          "\n [2] - Print Grades"
+          "\n [3] - Dispute Grades" # should send email to subject-teacher, cc principal
+          "\n [4] - Check Scholarship application status"
           "\n [5] - Exit")
     a = input("\nWhat would like like to do today? Enter the number: ")
 
     if a == "1":
+
         student_ID = int(input("Enter student ID: "))
-        grade = float(input("Enter the grade: "))
-        c.execute("INSERT INTO employees (first) VALUES ('001');")
-        print("Adding grade to database...")
+        print("checking database...")
         time.sleep(1)
+        a = mycursor.execute("SELECT section FROM gradingsystem WHERE studentID = {}".format(student_ID))
+        rows = mycursor.fetchall()
+        for r in rows:
+            print(r)
+            time.sleep(1)
         userinput()
+
 
     # add grades to system
     elif a == "2":  # To add students
-        student_ID = int(input("Enter student ID2:"))
-        student_first_name = str(input("Enter student's first name: "))
-        student_last_name = str(input("Enter student's last name: "))
-        student_GradeNum = str(input("Which grade is the student in? : "))
-        student_Section = str(input("Enter student's section: "))
-        print("Adding the student information to database...")
+        student_ID = int(input("Enter student ID: "))
+        print("checking database...")
         time.sleep(1)
-        print("Successful!")
-        time.sleep(1)
+        a = mycursor.execute("SELECT section FROM gradingsystem WHERE studentID = {}".format(student_ID))
+        rows = mycursor.fetchall()
+        for r in rows:
+            print(r)
+            time.sleep(1)
         userinput()
 
     elif a == "3":  # To delete students
@@ -67,6 +73,29 @@ def userinput():
         print("Thank for using the grading system. Good bye!")
     return None
 
+def studentlogin():
+    #mycursor = db.cursor()
+    select_query = "SELECT * FROM gradingsystem WHERE username=%s AND password=%s"
+    username = str(input("Enter your username: "))
+    password = str(input("Enter your password: "))
+    mycursor.execute(select_query, (username, password))
+
+    selected_rows = mycursor.fetchall()
+    print(selected_rows)
+    # print(type(selected_rows))
+    # print(username)
+    # print(password)
+    for i in selected_rows:
+        # for j in i:
+        #     #print(j)
+
+        if username in str(i):
+            userinput()
+        else:
+            print("Incorrect username and/or password!")
+
+
+studentlogin()
 
 def main_application():
     teacher1 = {"teachername": "Chrisvert Concepcion", "teacherID": 1001, "teacherpw": 1234}
@@ -90,7 +119,7 @@ def main_application():
     else:
         print("Max attempt. Contact your administrator")
 
-main_application()
+
 
 def ref_user():
     global file
