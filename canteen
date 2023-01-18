@@ -37,6 +37,7 @@ def take_order():
 
         #final_order = ((menu[int(z)]["name"], (menu[int(z)]["price"])))
         order_price = (menu[int(z)]["price"])
+
         order_price_list.append(order_price)
     #print("You ordered item numbers:",  order_price_list)
     sub_total = 0
@@ -44,6 +45,7 @@ def take_order():
     total_bill = 0
     for j in order_price_list:
         sub_total += float(j)
+
     print("Sub-total: $",round(sub_total,2))
     tax = (sub_total * .15)/100.0
     print("Tax $:",round(tax,2))
