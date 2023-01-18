@@ -1,0 +1,70 @@
+#
+# with open('bible_verses.txt',"r") as f:
+#     data =f.read()
+#     print(type(data))
+
+verses = {
+    "John 3:16": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
+    "Jeremiah 29:11": "For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, plans to give you hope and a future.",
+
+    "Romans 8:28": "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+
+    "Philippians 4:13": "I can do everything through him who gives me strength.",
+
+    "Genesis 1:1": "In the beginning God created the heavens and the earth.",
+
+    "Proverbs 3:5": "Trust in the LORD with all your heart and lean not on your own understanding.",
+
+    "Proverbs 3:6": "in all your ways acknowledge him, and he will make your paths straight.",
+
+    "Romans 12:2": "Do not conform any longer to the pattern of this world, but be transformed by the renewing of "
+                   "your mind. Then you will be able to test and approve what God’s will is—his good, pleasing and "
+                   "perfect will.",
+
+    "Philippians 4:6": "Do not be anxious about anything, but in everything, by prayer and petition, with thanksgiving, present your requests to God.",
+
+    "Matthew 28:19": "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of "
+                     "the Son and of the Holy Spirit.",
+
+    }
+
+
+find = input(("Which verses do you want to see? "))
+
+for key,value in verses.items():
+    found = False
+    if key == find:
+        found = True
+        print(key + "\n" + value)
+        break
+if found == False:
+    print("Verse does not exist")
+
+#
+# def search(values, searchFor):
+#     for k in values:
+#         for v in values[k]:
+#             if searchFor in v:
+#                 return k
+#     return None
+#
+#
+# searchFor = input(("Which verse do you want to see? "))
+#
+# print (search(verses, searchFor))
+# 
+# #to show the verse that contains the word the user is searching for
+# def find_word():
+#     word = input("What word do you want to search for?  ").lower()
+#     found = False
+#     for i in verses:
+#         print(i)
+#         if i == word:
+#             found = True
+#             print("Word exists in the dictionary")
+#     # if found == False:
+#     #     print("No such words exists in the dictionary")
+#     # else:
+#     #     print("Word exists in the dictionary")
+# 
+# find_word()
