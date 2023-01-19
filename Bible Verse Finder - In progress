@@ -1,4 +1,4 @@
-#
+#In progress
 # with open('bible_verses.txt',"r") as f:
 #     data =f.read()
 #     print(type(data))
