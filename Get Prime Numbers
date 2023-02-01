@@ -1,0 +1,8 @@
+number = int(input("Enter a number: "))
+
+if number == 2 or number == 3 or number == 5:
+    print(f"{number} is Prime (first condition)")
+elif number % 2 !=0 and number % 3 !=0 and number % 5 !=0 :
+        print(f"{number} is Prime (second condition)")
+else:
+    print(f"{number} is NOT Prime")
